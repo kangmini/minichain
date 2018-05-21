@@ -1,0 +1,10 @@
+{
+  "name": "minichain",
+  "version": "1.0.0",
+  "description": "minichain with NodeJs, ReactJs",
+  "main": "src/server.js",
+  "repository": "https://github.com/kangmini/minichain",
+  "author": "kangmini <kimkm212@gmail.com>",
+  "license": "MIT",
+  "private": false
+}
