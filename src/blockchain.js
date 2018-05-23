@@ -1,4 +1,4 @@
-import CryptoJS from "crypto-js";
+const CryptoJS = require("crypto-js");
 
 //블럭 structure
 class Block {
@@ -23,11 +23,11 @@ const genesisBlock = new Block(
 
 let blockchain = [genesisBlock];
 
-const getLastBlock = () => blockchain[blockchain.length -1];
+const getLastBlock = () => blockchain[getBlockchain().length -1];
 
 const getTimeStamp = () => new Date().getTime() / 1000;
 
-const getBlockChain = () => blockchain;
+const getBlockchain = () => blockchain;
 
 //해시 만드는넘
 const createHash = (index, previousHash, timestamp, data) =>
@@ -51,6 +51,7 @@ const createNewBlock = data => {
     newTimestamp,
     data
   );
+  addBlockToChain(newBlock);
   return newBlock;
 };
 
@@ -104,7 +105,7 @@ const isChainValid = candidateChain => {
   //이후 체인을 검증 하자
   for(let i = 1; i < candidateChain.length; i++) {
     if(!isNewBlockValid(candidateChain[i], candidateChain[i - 1])) {
-      console.log()
+      console.log();
       return false;
     }
   }
@@ -114,7 +115,7 @@ const isChainValid = candidateChain => {
 //체인을 교체한다
 const replaceChain = candidateChain => {
   //항상 긴 체인을 선호한
-  if(isChainValid(candidateChain) && candidateChain.length > blockchain.length) {
+  if(isChainValid(candidateChain) && candidateChain.length > getBlockchain().length) {
     blockchain = candidateChain;
     return true;
   }
@@ -124,8 +125,14 @@ const replaceChain = candidateChain => {
 //블럭을 체인에 더한다
 const addBlockToChain = candidateBlock => {
   if(isNewBlockValid(candidateBlock, getLastBlock())) {
-    blockchain.push(candidateBlock);
+    getBlockchain().push(candidateBlock);
     return true;
   }
   return false;
+};
+
+
+module.exports = {
+  getBlockchain,
+  createNewBlock
 }
