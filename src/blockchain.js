@@ -5,7 +5,7 @@ class Block {
   constructor(index, hash, previousHash, timestamp, data) {
     this.index = index;
     this.hash = hash;
-    this.priviousHash = previousHash;
+    this.previousHash = previousHash;
     this.timestamp = timestamp;
     this.data = data;
   }
@@ -31,7 +31,7 @@ const getBlockchain = () => blockchain;
 
 //해시 만드는넘
 const createHash = (index, previousHash, timestamp, data) =>
-  CryptoJS.SHA256(index + previousHash + timestamp + JSON.stringify(data).toString());
+  CryptoJS.SHA256(index + previousHash + timestamp + JSON.stringify(data).toString()).toString();
 
 //새 블럭 만드는넘
 const createNewBlock = data => {
