@@ -1,5 +1,6 @@
 const CryptoJS = require("crypto-js");
 
+
 //블럭 structure
 class Block {
   constructor(index, hash, previousHash, timestamp, data) {
