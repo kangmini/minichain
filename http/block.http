@@ -17,3 +17,12 @@ Content-Type: application/json
 }
 
 ###
+
+POST http://localhost:3000/peers
+Content-Type: application/json
+
+{
+    "peer": "ws://localhost:4000"
+}
+
+###

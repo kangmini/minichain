@@ -4,6 +4,7 @@ const morgan = require('morgan');
 
 const indexRouter = require('./src/routes/index');
 const blocksRouter = require('./src/routes/blocks');
+const peersRouter = require('./src/routes/peers');
 
 const app = express();
 
@@ -16,8 +17,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 
-
 app.use('/', indexRouter);
 app.use('/blocks', blocksRouter);
+app.use('/peers', peersRouter);
 
 module.exports = app;

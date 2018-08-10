@@ -1,6 +1,5 @@
 const CryptoJS = require("crypto-js");
 
-
 //블럭 structure
 class Block {
   constructor(index, hash, previousHash, timestamp, data) {
@@ -21,13 +20,10 @@ const genesisBlock = new Block(
     "Genesis block of minichain"
 );
 
-
 let blockchain = [genesisBlock];
 
 const getLastBlock = () => blockchain[getBlockchain().length -1];
-
 const getTimeStamp = () => new Date().getTime() / 1000;
-
 const getBlockchain = () => blockchain;
 
 //해시 만드는넘
@@ -135,5 +131,6 @@ const addBlockToChain = candidateBlock => {
 
 module.exports = {
   getBlockchain,
-  createNewBlock
+  createNewBlock,
+  getLastBlock
 }
