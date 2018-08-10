@@ -24,6 +24,12 @@ const getAll = () => {
   };
 };
 
+const blockchainResponse = (data) => {
+  return {
+    type: BLOCKCHAIN_RESPONSE,
+    data
+  };
+};
 
 const getSockets = () => sockets;
 
@@ -37,14 +43,12 @@ const startP2PServer = server => {
   console.log('minichain P2P RUN~~~~');
 };
 
-const initSocketConnection = socket => {
-  sockets.push(socket);
-  socket.on("message", data => {
-    console.log(data);
-  });
-  setTimeout(() => {
-    socket.send("welcome");
-  }, 5000);
+const initSocketConnection = ws => {
+  sockets.push(ws);
+  handleSocketMessages(ws);
+  handleSocketError(ws);
+  sendMessage(ws, getLatest());
+
 };
 
 const handleSocketError = ws => {
@@ -55,6 +59,33 @@ const handleSocketError = ws => {
   ws.on("close", () => closeSocketConnection(ws));
   ws.on("error", () => closeSocketConnection(ws));
 };
+
+const parseDate = data => {
+  try {
+    return JSON.parse(data);
+  } catch(e) {
+    console.log(e);
+    return null;
+  }
+};
+
+const handleSocketMessages = ws => {
+  ws.on("message", data => {
+    const message = parseDate(data);
+    if(message === null) {
+      return;
+    }
+    console.log(message);
+    switch (message.type) {
+      case GET_LATEST:
+        sendMessage(ws, getLastBlock());
+        break;
+    }
+  });
+};
+
+
+const sendMessage = (ws, message) => ws.send(JSON.stringify(message));
 
 const connectToPeers = newPeer => {
   const ws = new WebSockets(newPeer);
