@@ -55,9 +55,9 @@ const createNewBlock = data => {
 const getBlockHash = (block) => createHash(block.index, block.previousHash, block.timestamp, block.data);
 
 //블럭 맞는지 판별하는 넘
-const isNewBlockValid = (candidateBlock, lastestBlock) => {
+const isBlockValid = (candidateBlock, lastestBlock) => {
   //블럭 구조가 유효하지 않음
-  if(!isNewStructureValid(candidateBlock)) {
+  if(!isBlockStructureValid(candidateBlock)) {
     console.log("The candidate block structure is not valid");
     return false;
   }
@@ -80,7 +80,7 @@ const isNewBlockValid = (candidateBlock, lastestBlock) => {
 };
 
 //블록의 구조가 유효한지 판별한
-const isNewStructureValid = (block) => {
+const isBlockStructureValid = (block) => {
   return (
     typeof block.index === "number" &&
     typeof block.hash === "string" &&
@@ -101,7 +101,7 @@ const isChainValid = candidateChain => {
 
   //이후 체인을 검증 하자
   for(let i = 1; i < candidateChain.length; i++) {
-    if(!isNewBlockValid(candidateChain[i], candidateChain[i - 1])) {
+    if(!isBlockValid(candidateChain[i], candidateChain[i - 1])) {
       console.log();
       return false;
     }
@@ -121,7 +121,7 @@ const replaceChain = candidateChain => {
 
 //블럭을 체인에 더한다
 const addBlockToChain = candidateBlock => {
-  if(isNewBlockValid(candidateBlock, getLastBlock())) {
+  if(isBlockValid(candidateBlock, getLastBlock())) {
     getBlockchain().push(candidateBlock);
     return true;
   }
@@ -132,5 +132,7 @@ const addBlockToChain = candidateBlock => {
 module.exports = {
   getBlockchain,
   createNewBlock,
-  getLastBlock
+  getLastBlock,
+  isBlockStructureValid,
+  isBlockValid
 }

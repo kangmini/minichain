@@ -13,7 +13,7 @@ POST http://localhost:3000/blocks
 Content-Type: application/json
 
 {
-    "data": "data!!!@#@312312223"
+    "data": "data!!asdfddd!@#@312312223"
 }
 
 ###
