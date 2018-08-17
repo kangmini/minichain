@@ -10,4 +10,8 @@ router.post("/", (req, res) => {
   res.send("gg");
 });
 
+router.get("/connections", (req, res) => {
+  res.send('connect');
+});
+
 module.exports = router;

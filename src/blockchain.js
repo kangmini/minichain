@@ -22,8 +22,10 @@ const genesisBlock = new Block(
 
 let blockchain = [genesisBlock];
 
-const getLastBlock = () => blockchain[getBlockchain().length -1];
+const getNewestBlock = () => blockchain[getBlockchain().length -1];
+
 const getTimeStamp = () => new Date().getTime() / 1000;
+
 const getBlockchain = () => blockchain;
 
 //해시 만드는넘
@@ -32,7 +34,7 @@ const createHash = (index, previousHash, timestamp, data) =>
 
 //새 블럭 만드는넘
 const createNewBlock = data => {
-  const previousBlock = getLastBlock();
+  const previousBlock = getNewestBlock();
   const newBlockIndex = previousBlock.index +1;
   const newTimestamp = getTimeStamp();
   const newHash = createHash(
@@ -121,7 +123,7 @@ const replaceChain = candidateChain => {
 
 //블럭을 체인에 더한다
 const addBlockToChain = candidateBlock => {
-  if(isBlockValid(candidateBlock, getLastBlock())) {
+  if(isBlockValid(candidateBlock, getNewestBlock())) {
     getBlockchain().push(candidateBlock);
     return true;
   }
@@ -132,7 +134,7 @@ const addBlockToChain = candidateBlock => {
 module.exports = {
   getBlockchain,
   createNewBlock,
-  getLastBlock,
+  getLastBlock: getNewestBlock,
   isBlockStructureValid,
   isBlockValid
 }
