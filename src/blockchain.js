@@ -137,4 +137,4 @@ module.exports = {
   getLastBlock: getNewestBlock,
   isBlockStructureValid,
   isBlockValid
-}
+};
